@@ -1,2 +1,4 @@
 # MyPractice
-个人联系demo
+##个人练习demo：   
+### greenDao
+### rxjava+retrofit

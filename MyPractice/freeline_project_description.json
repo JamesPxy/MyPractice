@@ -1,0 +1,101 @@
+{
+    "project_type": "gradle",
+    "android_gradle_plugin_version": "2.2.3",
+    "freeline_gradle_plugin_version": "0.8.4",
+    "java_home": "E:\\jdk1.8.0_25",
+    "freeline_cache_dir": "D:\\ASProject\\MyPractice",
+    "auto_dependency": true,
+    "product_flavor": "",
+    "build_script": "gradlew.bat :app:assembleDebug",
+    "build_script_work_directory": "",
+    "root_dir": "D:\\ASProject\\MyPractice",
+    "main_project_name": "app",
+    "main_project_dir": "app",
+    "build_directory": "D:\\ASProject\\MyPractice\\app\\build",
+    "build_cache_dir": "D:\\ASProject\\MyPractice\\app\\build\\freeline",
+    "build_tools_version": "23.0.2",
+    "sdk_directory": "E:\\Develop\\Android\\Sdk",
+    "build_tools_directory": "E:\\Develop\\Android\\Sdk\\build-tools\\23.0.2",
+    "compile_sdk_version": "android-23",
+    "compile_sdk_directory": "E:\\Develop\\Android\\Sdk\\platforms\\android-23",
+    "package": "mypractice.pxy.com.mypractice",
+    "debug_package": "mypractice.pxy.com.mypractice",
+    "main_manifest_path": "D:\\ASProject\\MyPractice\\app\\src\\main\\AndroidManifest.xml",
+    "launcher": "mypractice.pxy.com.mypractice.MainActivity",
+    "apk_path": "D:\\ASProject\\MyPractice\\app\\build\\outputs\\apk\\app-debug.apk",
+    "extra_dep_res_paths": [
+        
+    ],
+    "exclude_dep_res_paths": [
+        
+    ],
+    "main_r_path": "D:\\ASProject\\MyPractice\\app\\build\\generated\\source\\r\\debug\\R.java",
+    "use_jdk8": true,
+    "main_src_directory": [
+        "D:\\ASProject\\MyPractice\\app\\src\\debug\\java",
+        "D:\\ASProject\\MyPractice\\app\\src\\main\\java"
+    ],
+    "main_res_directory": [
+        "D:\\ASProject\\MyPractice\\app\\src\\debug\\res",
+        "D:\\ASProject\\MyPractice\\app\\src\\main\\res"
+    ],
+    "main_assets_directory": [
+        "D:\\ASProject\\MyPractice\\app\\src\\debug\\assets",
+        "D:\\ASProject\\MyPractice\\app\\src\\main\\assets"
+    ],
+    "main_jni_directory": [
+        "D:\\ASProject\\MyPractice\\app\\src\\debug\\jni",
+        "D:\\ASProject\\MyPractice\\app\\src\\main\\jni"
+    ],
+    "main_jniLibs_directory": [
+        "D:\\ASProject\\MyPractice\\app\\src\\debug\\jniLibs",
+        "D:\\ASProject\\MyPractice\\app\\src\\main\\jniLibs"
+    ],
+    "project_source_sets": {
+        "app": {
+            "main_src_directory": [
+                "D:\\ASProject\\MyPractice\\app\\src\\debug\\java",
+                "D:\\ASProject\\MyPractice\\app\\src\\main\\java"
+            ],
+            "main_res_directory": [
+                "D:\\ASProject\\MyPractice\\app\\src\\debug\\res",
+                "D:\\ASProject\\MyPractice\\app\\src\\main\\res"
+            ],
+            "main_assets_directory": [
+                "D:\\ASProject\\MyPractice\\app\\src\\debug\\assets",
+                "D:\\ASProject\\MyPractice\\app\\src\\main\\assets"
+            ],
+            "main_jni_directory": [
+                "D:\\ASProject\\MyPractice\\app\\src\\debug\\jni",
+                "D:\\ASProject\\MyPractice\\app\\src\\main\\jni"
+            ],
+            "main_jniLibs_directory": [
+                "D:\\ASProject\\MyPractice\\app\\src\\debug\\jniLibs",
+                "D:\\ASProject\\MyPractice\\app\\src\\main\\jniLibs"
+            ],
+            "main_manifest_path": "D:\\ASProject\\MyPractice\\app\\src\\main\\AndroidManifest.xml"
+        }
+    },
+    "modules": [
+        {
+            "name": "app",
+            "path": "D:\\ASProject\\MyPractice\\app"
+        }
+    ],
+    "module_dependencies": {
+        "app": [
+            
+        ]
+    },
+    "databinding": [
+        {
+            "name": "app",
+            "isLibrary": false,
+            "minSdkVersion": 15,
+            "packageName": "mypractice.pxy.com.mypractice"
+        }
+    ],
+    "databinding_modules": [
+        "app"
+    ]
+}

@@ -1,0 +1,75 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+apply plugin: 'com.antfortune.freeline'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion '23.0.2'
+    defaultConfig {
+        applicationId "mypractice.pxy.com.mypractice"
+        minSdkVersion 15
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    //开启data  binding
+    dataBinding{
+        enabled=true
+    }
+
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+}
+
+greendao {
+    schemaVersion 3 //数据库版本号
+    daoPackage 'com.pxy.greendao.gen'//生成的DAO，DaoMaster和DaoSession的包名。默认是实体的包名。
+//    generateTests true  //是否生成单元测试
+//    targetGenDir 'src/main/java'  // 生成的单元测试的根目录。
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:design:24.2.1'
+    testCompile 'junit:junit:4.12'
+    compile 'org.greenrobot:greendao:3.2.0'
+    // This is only needed if you want to use encrypted databases
+    //    compile 'net.zetetic:android-database-sqlcipher:3.5.4'
+    // load with glide
+    compile 'com.github.piasy:GlideImageLoader:1.2.5'
+    /*rx-android-java*/
+    compile 'io.reactivex:rxjava:+'
+//    compile 'com.squareup.retrofit:adapter-rxjava:+'
+    compile 'com.squareup.retrofit2:adapter-rxjava:+'
+    compile 'com.trello:rxlifecycle:+'
+    compile 'com.trello:rxlifecycle-components:+'
+    /*rotrofit*/
+    compile 'com.squareup.retrofit2:retrofit:+'
+    compile 'com.squareup.retrofit2:converter-gson:+'
+    compile 'com.google.code.gson:gson:+'
+    //    compile 'io.reactivex:rxjava:1.1.0'
+    //    compile 'io.reactivex:rxandroid:1.1.0'
+    //    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
+    //
+    //    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
+    //    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+    //    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    //    compile 'com.tamic.novate:novate:1.2.4'
+}

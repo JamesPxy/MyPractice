@@ -1,0 +1,55 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="mypractice.pxy.com.mypractice.utils.Utils" />
+
+        <variable
+            name="user"
+            type="mypractice.pxy.com.mypractice.entity.ObservableUser" />
+        <import type="android.view.View" />
+
+        <import type="com.github.piasy.biv.view.BigImageView"/>
+
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:onClick="doClick"
+            android:text="刷新view  MVVM  COOL" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{Utils.capitalize(user.getFirstName)}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(user.getLastName)}" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="@{user.adult ? View.VISIBLE : View.INVISIBLE}"
+            android:text="点击消失" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black"
+            android:padding="@{user.adult? (int)@dimen/largePadding : (int)@dimen/smallPadding}"
+            android:text="hello world"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+</layout>
