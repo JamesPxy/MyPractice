@@ -34,7 +34,7 @@ android {
 }
 
 greendao {
-    schemaVersion 3 //数据库版本号
+    schemaVersion 4 //数据库版本号
     daoPackage 'com.pxy.greendao.gen'//生成的DAO，DaoMaster和DaoSession的包名。默认是实体的包名。
 //    generateTests true  //是否生成单元测试
 //    targetGenDir 'src/main/java'  // 生成的单元测试的根目录。

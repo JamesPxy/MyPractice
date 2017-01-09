@@ -42,17 +42,22 @@ public class CookieInterceptor implements Interceptor {
                 charset = contentType.charset(charset);
             }
             String bodyString = buffer.clone().readString(charset);
-            String url = request.url().toString();
-            CookieResulte resulte= dbUtil.queryCookieBy(url);
+            String url = request.url().toString().split("\\?")[0];
+//            String array[]=url.split("\\?");
+//            Log.i(TAG, "intercept: url0--"+array[0]);
+//            if(null!=array[0]){
+//                url=array[0];
+//            }
+            CookieResult result= dbUtil.queryCookieBy(url);
             long time=System.currentTimeMillis();
             /*保存和更新本地数据*/
-            if(resulte==null){
-                resulte  =new CookieResulte(url,bodyString,time);
-                dbUtil.saveCookie(resulte);
+            if(result==null){
+                result  =new CookieResult(url,bodyString,time);
+                dbUtil.saveCookie(result);
             }else{
-                resulte.setResulte(bodyString);
-                resulte.setTime(time);
-                dbUtil.updateCookie(resulte);
+                result.setResult(bodyString);
+                result.setTime(time);
+                dbUtil.updateCookie(result);
             }
         }
         return response;

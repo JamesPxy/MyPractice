@@ -18,9 +18,9 @@ import mypractice.pxy.com.mypractice.entity.HttpResult;
 import mypractice.pxy.com.mypractice.entity.Subject;
 import mypractice.pxy.com.mypractice.entity.SubjectPostApi;
 import mypractice.pxy.com.mypractice.internet.callback.HttpOnNextListener;
-import mypractice.pxy.com.mypractice.internet.callback.MovieRequest;
+import mypractice.pxy.com.mypractice.internet.callback.HttpService;
 import mypractice.pxy.com.mypractice.internet.callback.SubscriberOnNextListener;
-import mypractice.pxy.com.mypractice.internet.http.HttpBiz;
+import mypractice.pxy.com.mypractice.internet.http.HttpManger;
 import mypractice.pxy.com.mypractice.internet.http.ProgressSubscriber;
 import mypractice.pxy.com.mypractice.internet.http.cookie.RequestSubscriber;
 import rx.Observable;
@@ -65,7 +65,7 @@ public class TestNetActivity extends AppCompatActivity {
 //                .addConverterFactory(GsonConverterFactory.create())
 //                .build();
 //
-//        MovieRequest movieRequest = retrofit.create(MovieRequest.class);
+//        HttpService movieRequest = retrofit.create(HttpService.class);
 //        Call<HttpResult> call = movieRequest.getTopMovie(0, 10);
 //        call.enqueue(new Callback<HttpResult>() {
 //            @Override
@@ -94,7 +94,7 @@ public class TestNetActivity extends AppCompatActivity {
 //                .build();
 //
 //
-//        MovieRequest movieRequest = retrofit.create(MovieRequest.class);
+//        HttpService movieRequest = retrofit.create(HttpService.class);
 //
 //        movieRequest.getTopMovie(0, 10)
 //                .subscribeOn(Schedulers.io())
@@ -134,7 +134,7 @@ public class TestNetActivity extends AppCompatActivity {
                 tvResult.setText(result);
             }
         };
-        HttpBiz.getInstance().getTopMovie(new ProgressSubscriber(getTopMovieOnNext, TestNetActivity.this), 0, 3);
+        HttpManger.getInstance().getTopMovie(new ProgressSubscriber(getTopMovieOnNext, TestNetActivity.this), 0, 3);
     }
 
     public void  doRequest4(){
@@ -150,14 +150,14 @@ public class TestNetActivity extends AppCompatActivity {
             }
         };
 
-        HttpBiz  httpBiz=HttpBiz.getInstance();
+        HttpManger httpManger = HttpManger.getInstance();
 
-        MovieRequest movieRequest = httpBiz.getRetrofit().create(MovieRequest.class);
+        HttpService httpService = httpManger.getRetrofit().create(HttpService.class);
 
-        Observable observable = movieRequest.getTopMovie(3,6)
-                .map(new HttpBiz.HttpResultFunc<List<Subject>>());
+        Observable observable = httpService.getTopMovie(3,6)
+                .map(new HttpManger.HttpResultFunc<List<Subject>>());
 
-        httpBiz.initSubscribe(observable,new ProgressSubscriber(getTopMovieOnNext,TestNetActivity.this));
+        httpManger.initSubscribe(observable,new ProgressSubscriber(getTopMovieOnNext,TestNetActivity.this));
     }
 
     public void  doRequest5(){
@@ -202,7 +202,7 @@ public class TestNetActivity extends AppCompatActivity {
         // TODO: 2017/1/6
 //        postEntity.setMothed();
 
-        HttpBiz.getInstance().getTopMovie(new RequestSubscriber<List<Subject>>(postEntity),0,2);
+        HttpManger.getInstance().getTopMovie(new RequestSubscriber<List<Subject>>(postEntity),0,2);
 
     }
 

@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import mypractice.pxy.com.mypractice.MyApplication;
 import mypractice.pxy.com.mypractice.entity.HttpResult;
 import mypractice.pxy.com.mypractice.entity.Subject;
-import mypractice.pxy.com.mypractice.internet.callback.MovieRequest;
+import mypractice.pxy.com.mypractice.internet.callback.HttpService;
 import mypractice.pxy.com.mypractice.internet.http.cookie.CacheInterceptor;
 import mypractice.pxy.com.mypractice.internet.http.cookie.CookieInterceptor;
 import mypractice.pxy.com.mypractice.internet.http.cookie.RetryWhenNetworkException;
@@ -25,21 +25,27 @@ import rx.schedulers.Schedulers;
  * Created by Administrator on 2017/1/4.
  */
 
-public class HttpBiz {
+public class HttpManger {
 
-    private static HttpBiz mInstance;
+    private static HttpManger mInstance;
 
+    /*请求通用  url*/
     public static final String BASE_URL = "https://api.douban.com/v2/movie/";
+    /*超时时间-默认5秒*/
+    private static final int DEFAULT_CONNECT_TIMEOUT = 5;
 
-    private static final int DEFAULT_TIMEOUT = 5;
+    /*有网情况下的本地缓存时间默认60秒*/
+    private int cookieNetWorkTime=60;
+    /*无网络的情况下本地缓存时间默认30天*/
+    private int cookieNoNetWorkTime=24*60*60*30;
 
     private Retrofit retrofit;
-    private MovieRequest movieRequest;
+    private HttpService httpService;
 
-    private HttpBiz() {
+    private HttpManger() {
         //手动创建一个OkHttpClient并设置超时时间
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+        builder.connectTimeout(DEFAULT_CONNECT_TIMEOUT, TimeUnit.SECONDS);
         builder.addInterceptor(new CacheInterceptor());//get缓存方式拦截器
         builder.addNetworkInterceptor(new CookieInterceptor(true));//缓存请求返回数据
         builder.cache(new Cache(MyApplication.app.getCacheDir(),10*1024*1024));//缓存位置和大小 10M
@@ -53,7 +59,7 @@ public class HttpBiz {
                 .baseUrl(BASE_URL)
                 .build();
 
-        movieRequest = retrofit.create(MovieRequest.class);
+        httpService = retrofit.create(HttpService.class);
 
     }
 
@@ -62,11 +68,11 @@ public class HttpBiz {
      *
      * @return
      */
-    public static final HttpBiz getInstance() {
+    public static final HttpManger getInstance() {
         if (mInstance == null) {
-            synchronized (HttpBiz.class) {
+            synchronized (HttpManger.class) {
                 if (mInstance == null) {
-                    mInstance = new HttpBiz();
+                    mInstance = new HttpManger();
                 }
             }
         }
@@ -86,7 +92,7 @@ public class HttpBiz {
      */
     public void getTopMovie(Subscriber<List<Subject>> subscriber, int start, int count) {
 
-//        movieRequest.getTopMovie(start, count)
+//        httpService.getTopMovie(start, count)
 //                .map(new HttpResultFunc<List<Subject>>())
 //                .subscribeOn(Schedulers.io())
 //                .unsubscribeOn(Schedulers.io())
@@ -95,7 +101,7 @@ public class HttpBiz {
 
 //        HttpResultFunc<List<HttpResult>> result = new HttpResultFunc<List<HttpResult>>();
 
-        Observable observable = movieRequest.getTopMovie(start, count)
+        Observable observable = httpService.getTopMovie(start, count)
                 .map(new HttpResultFunc<List<Subject>>());
 
         initSubscribe(observable, subscriber);
@@ -121,7 +127,7 @@ public class HttpBiz {
         @Override
         public T call(HttpResult<T> httpResult) {
             if (httpResult.getCount() == 0) {
-                throw new ApiException(100);
+                throw new HttpException(100);
             }
             return httpResult.getSubjects();
         }

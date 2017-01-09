@@ -3,34 +3,35 @@ package mypractice.pxy.com.mypractice.utils;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.pxy.greendao.gen.CookieResultDao;
 import com.pxy.greendao.gen.DaoMaster;
 import com.pxy.greendao.gen.DaoSession;
+import com.pxy.greendao.gen.DownInfoDao;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.List;
 
 import mypractice.pxy.com.mypractice.MyApplication;
-import mypractice.pxy.com.mypractice.internet.http.cookie.CookieResult;
+import mypractice.pxy.com.mypractice.internet.download.DownInfo;
+import mypractice.pxy.com.mypractice.internet.download.HttpDownManager;
 
 
 /**
- * 数据缓存
+ * 断点续传
  * 数据库工具类-geendao运用
  * Created by WZG on 2016/10/25.
  */
 
-public class CookieDbUtil {
-    private static CookieDbUtil db;
+public class DbUtil {
+    private static DbUtil db;
     private final static String dbName = "tests_db";
     private DaoMaster.DevOpenHelper openHelper;
     private Context context;
 
 
-    public CookieDbUtil() {
+    public DbUtil() {
         context= MyApplication.app;
-        openHelper = new DaoMaster.DevOpenHelper(context, dbName);
+        openHelper = new DaoMaster.DevOpenHelper(context, dbName, null);
     }
 
 
@@ -38,11 +39,11 @@ public class CookieDbUtil {
      * 获取单例
      * @return
      */
-    public static CookieDbUtil getInstance() {
+    public static DbUtil getInstance() {
         if (db == null) {
-            synchronized (CookieDbUtil.class) {
+            synchronized (HttpDownManager.class) {
                 if (db == null) {
-                    db = new CookieDbUtil();
+                    db = new DbUtil();
                 }
             }
         }
@@ -55,7 +56,7 @@ public class CookieDbUtil {
      */
     private SQLiteDatabase getReadableDatabase() {
         if (openHelper == null) {
-            openHelper = new DaoMaster.DevOpenHelper(context, dbName);
+            openHelper = new DaoMaster.DevOpenHelper(context, dbName, null);
         }
         SQLiteDatabase db = openHelper.getReadableDatabase();
         return db;
@@ -66,42 +67,42 @@ public class CookieDbUtil {
      */
     private SQLiteDatabase getWritableDatabase() {
         if (openHelper == null) {
-            openHelper = new DaoMaster.DevOpenHelper(context, dbName);
+            openHelper = new DaoMaster.DevOpenHelper(context, dbName, null);
         }
         SQLiteDatabase db = openHelper.getWritableDatabase();
         return db;
     }
 
 
-    public void saveCookie(CookieResult info){
+    public void save(DownInfo info){
         DaoMaster daoMaster = new DaoMaster(getWritableDatabase());
         DaoSession daoSession = daoMaster.newSession();
-        CookieResultDao downInfoDao = daoSession.getCookieResultDao();
+        DownInfoDao downInfoDao = daoSession.getDownInfoDao();
         downInfoDao.insert(info);
     }
 
-    public void updateCookie(CookieResult info){
+    public void update(DownInfo info){
         DaoMaster daoMaster = new DaoMaster(getWritableDatabase());
         DaoSession daoSession = daoMaster.newSession();
-        CookieResultDao downInfoDao = daoSession.getCookieResultDao();
+        DownInfoDao downInfoDao = daoSession.getDownInfoDao();
         downInfoDao.update(info);
     }
 
-    public void deleteCookie(CookieResult info){
+    public void deleteDowninfo(DownInfo info){
         DaoMaster daoMaster = new DaoMaster(getWritableDatabase());
         DaoSession daoSession = daoMaster.newSession();
-        CookieResultDao downInfoDao = daoSession.getCookieResultDao();
+        DownInfoDao downInfoDao = daoSession.getDownInfoDao();
         downInfoDao.delete(info);
     }
 
 
-    public CookieResult queryCookieBy(String  url) {
+    public DownInfo queryDownBy(long Id) {
         DaoMaster daoMaster = new DaoMaster(getReadableDatabase());
         DaoSession daoSession = daoMaster.newSession();
-        CookieResultDao downInfoDao = daoSession.getCookieResultDao();
-        QueryBuilder<CookieResult> qb = downInfoDao.queryBuilder();
-        qb.where(CookieResultDao.Properties.Url.eq(url));
-        List<CookieResult> list = qb.list();
+        DownInfoDao downInfoDao = daoSession.getDownInfoDao();
+        QueryBuilder<DownInfo> qb = downInfoDao.queryBuilder();
+        qb.where(DownInfoDao.Properties.Id.eq(Id));
+        List<DownInfo> list = qb.list();
         if(list.isEmpty()){
             return null;
         }else{
@@ -109,11 +110,11 @@ public class CookieDbUtil {
         }
     }
 
-    public List<CookieResult> queryCookieAll() {
+    public List<DownInfo> queryDownAll() {
         DaoMaster daoMaster = new DaoMaster(getReadableDatabase());
         DaoSession daoSession = daoMaster.newSession();
-        CookieResultDao downInfoDao = daoSession.getCookieResultDao();
-        QueryBuilder<CookieResult> qb = downInfoDao.queryBuilder();
+        DownInfoDao downInfoDao = daoSession.getDownInfoDao();
+        QueryBuilder<DownInfo> qb = downInfoDao.queryBuilder();
         return qb.list();
     }
 }

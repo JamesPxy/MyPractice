@@ -9,55 +9,62 @@ import org.greenrobot.greendao.annotation.Id;
  * Created by WZG on 2016/10/26.
  */
 @Entity
-public class CookieResulte {
+public class CookieResult {
     @Id
     private long id;
     /*url*/
     private String url;
     /*返回结果*/
-    private String resulte;
+    private String result;
     /*时间*/
     private long time;
 
-    public CookieResulte(String url, String resulte, long time) {
+    @Generated(hash = 43459054)
+    public CookieResult() {
+    }
+
+    public CookieResult(String url, String result, long time) {
         this.url = url;
-        this.resulte = resulte;
+        this.result = result;
         this.time = time;
     }
 
-
-    @Generated(hash = 1796425720)
-    public CookieResulte(long id, String url, String resulte, long time) {
+    @Generated(hash = 1914207567)
+    public CookieResult(long id, String url, String result, long time) {
         this.id = id;
         this.url = url;
-        this.resulte = resulte;
+        this.result = result;
         this.time = time;
     }
 
-    @Generated(hash = 2104390000)
-    public CookieResulte() {
-    }
     public long getId() {
-        return this.id;
+        return id;
     }
+
     public void setId(long id) {
         this.id = id;
     }
+
     public String getUrl() {
-        return this.url;
+        return url;
     }
+
     public void setUrl(String url) {
         this.url = url;
     }
-    public String getResulte() {
-        return this.resulte;
+
+    public String getResult() {
+        return result;
     }
-    public void setResulte(String resulte) {
-        this.resulte = resulte;
+
+    public void setResult(String result) {
+        this.result = result;
     }
+
     public long getTime() {
-        return this.time;
+        return time;
     }
+
     public void setTime(long time) {
         this.time = time;
     }

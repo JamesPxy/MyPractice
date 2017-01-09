@@ -6,8 +6,8 @@ import java.lang.ref.SoftReference;
 
 import mypractice.pxy.com.mypractice.entity.HttpResult;
 import mypractice.pxy.com.mypractice.internet.callback.HttpOnNextListener;
-import mypractice.pxy.com.mypractice.internet.callback.MovieRequest;
-import mypractice.pxy.com.mypractice.internet.http.ApiException;
+import mypractice.pxy.com.mypractice.internet.callback.HttpService;
+import mypractice.pxy.com.mypractice.internet.http.HttpException;
 import rx.Observable;
 import rx.functions.Func1;
 
@@ -25,18 +25,33 @@ public abstract class BaseApi<T> implements Func1<HttpResult<T>, T> {
     private boolean cancel;
     /*是否显示加载框*/
     private boolean showProgress;
-    /*是否需要缓存处理*/
-    private boolean cache;
+
     /*基础url*/
-    private  String baseUrl="https://api.douban.com/v2/movie/";
-    /*方法-如果需要缓存必须设置这个参数；不需要不用設置*/
-    private String mothed;
+    private String baseUrl = "https://api.douban.com/v2/movie/";
+
     /*超时时间-默认6秒*/
     private int connectionTime = 6;
-    /*有网情况下的本地缓存时间默认60秒*/
-    private int cookieNetWorkTime=60;
+    //// TODO: 2017/1/9 重要属性
+    /*有网情况下的本地缓存时间默认60秒  如果需要实时请求则  设置此时间为0*/
+    private int cookieNetWorkTime = 60;
     /*无网络的情况下本地缓存时间默认30天*/
-    private int cookieNoNetWorkTime=24*60*60*30;
+    private int cookieNoNetWorkTime = 24 * 60 * 60 * 30;
+    /*是否需要缓存处理*/
+    private boolean cache;
+    /*方法-如果需要缓存必须设置这个参数；不需要不用設置   该方法名用于区分缓存数据对应请求接口*/
+    private String mothed;
+
+//    public static  final int  FORCE_CACHE=0;
+//
+//    public static  final int  FORCE_INTERNET=1;
+
+    private CACHE_CONTROL cacheStrategy = CACHE_CONTROL.FORCE_INTERNET;
+
+    public enum CACHE_CONTROL {
+        FORCE_CACHE, //缓存优先
+        FORCE_INTERNET;//网络优先
+    }
+
 
     public BaseApi(HttpOnNextListener listener, Context context) {
         setListener(listener);
@@ -45,14 +60,22 @@ public abstract class BaseApi<T> implements Func1<HttpResult<T>, T> {
         setCache(true);
     }
 
+
+    public CACHE_CONTROL getCacheStrategy() {
+        return cacheStrategy;
+    }
+
+    public void setCacheStrategy(CACHE_CONTROL strategy) {
+        cacheStrategy = strategy;
+    }
+
     /**
      * 设置参数
      *
      * @param methods
      * @return
      */
-    public abstract Observable getObservable(MovieRequest methods);
-
+    public abstract Observable getObservable(HttpService methods);
 
 
     public int getCookieNoNetWorkTime() {
@@ -96,11 +119,11 @@ public abstract class BaseApi<T> implements Func1<HttpResult<T>, T> {
     }
 
     public String getUrl() {
-        return baseUrl+mothed;
+        return baseUrl + mothed;
     }
 
     public void setContext(Context mContext) {
-        this.mContext =new SoftReference(mContext) ;
+        this.mContext = new SoftReference(mContext);
     }
 
     public boolean isCache() {
@@ -120,33 +143,37 @@ public abstract class BaseApi<T> implements Func1<HttpResult<T>, T> {
     }
 
     public boolean isCancel() {
-         return cancel;
-     }
+        return cancel;
+    }
 
-     public void setCancel(boolean cancel) {
-         this.cancel = cancel;
-     }
+    public void setCancel(boolean cancel) {
+        this.cancel = cancel;
+    }
 
-     public SoftReference<HttpOnNextListener> getListener() {
-         return listener;
-     }
+    public SoftReference<HttpOnNextListener> getListener() {
+        return listener;
+    }
 
-     public void setListener(HttpOnNextListener listener) {
-         this.listener = new SoftReference(listener);
-     }
+    public void setListener(HttpOnNextListener listener) {
+        this.listener = new SoftReference(listener);
+    }
 
     /*
      * 获取当前rx生命周期
      * @return
      */
-    public  Context getContext() {
+    public Context getContext() {
         return mContext.get();
     }
 
+
+    /*
+       处理返回数据  以便得到相要数据
+     */
     @Override
     public T call(HttpResult<T> httpResult) {
         if (httpResult.getCount() == 0) {
-            throw new ApiException(httpResult.getTitle());
+            throw new HttpException(httpResult.getTitle());
         }
         return httpResult.getSubjects();
     }

@@ -3,7 +3,7 @@ package mypractice.pxy.com.mypractice.entity;
 import android.content.Context;
 
 import mypractice.pxy.com.mypractice.internet.callback.HttpOnNextListener;
-import mypractice.pxy.com.mypractice.internet.callback.MovieRequest;
+import mypractice.pxy.com.mypractice.internet.callback.HttpService;
 import mypractice.pxy.com.mypractice.internet.http.cookie.BaseApi;
 import rx.Observable;
 
@@ -34,7 +34,8 @@ public class SubjectPostApi extends BaseApi {
         setShowProgress(true);
         setCancel(true);
         setCache(true);
-        setMothed("top250?start=0&count=2");
+//        setMothed("top250?start=0&count=2");
+        setMothed("top250");
         setCookieNetWorkTime(60);
         setCookieNoNetWorkTime(24*60*60);
     }
@@ -58,7 +59,7 @@ public class SubjectPostApi extends BaseApi {
     }
 
     @Override
-    public Observable getObservable(MovieRequest methods) {
+    public Observable getObservable(HttpService methods) {
         return methods.getTopMovie(start,count);
     }
 }

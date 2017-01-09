@@ -3,16 +3,16 @@ package mypractice.pxy.com.mypractice.internet.http;
 /**
  * Created by liukun on 16/3/10.
  */
-public class ApiException extends RuntimeException {
+public class HttpException extends RuntimeException {
 
     public static final int USER_NOT_EXIST = 100;
     public static final int WRONG_PASSWORD = 101;
 
-    public ApiException(int resultCode) {
+    public HttpException(int resultCode) {
         this(getApiExceptionMessage(resultCode));
     }
 
-    public ApiException(String detailMessage) {
+    public HttpException(String detailMessage) {
         super(detailMessage);
     }
 
