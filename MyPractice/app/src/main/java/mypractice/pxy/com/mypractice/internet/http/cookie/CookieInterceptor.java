@@ -15,7 +15,6 @@ import okio.BufferedSource;
 
 /**
  * gson持久化截取保存数据
- * Created by WZG on 2016/10/20.
  */
 public class CookieInterceptor implements Interceptor {
     private CookieDbUtil dbUtil;
