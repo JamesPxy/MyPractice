@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
 //        setContentView(R.layout.activity_login);
 
         //生成bindview的名称  为 activity_login  变成大些
-        mypractice.pxy.com.mypractice.databinding.ActivityLoginBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        ActivityLoginBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         user = new ObservableUser("pxy", "tcd",true);
         binding.setUser(user);
 

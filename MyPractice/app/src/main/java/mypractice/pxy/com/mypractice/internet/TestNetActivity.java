@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import butterknife.Bind;
@@ -177,7 +178,7 @@ public class TestNetActivity extends AppCompatActivity {
                 super.onCacheNext(cache);
                 /*缓存回调*/
                 Gson gson=new Gson();
-                java.lang.reflect.Type type = new TypeToken<HttpResult<List<Subject>>>() {}.getType();
+                Type type = new TypeToken<HttpResult<List<Subject>>>() {}.getType();
                 HttpResult resultEntity= gson.fromJson(cache, type);
                 tvResult.setText("缓存返回：\n"+resultEntity.getSubjects().toString() );
             }
