@@ -5,8 +5,7 @@ import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 
 /**
- * post請求緩存数据
- * Created by WZG on 2016/10/26.
+ * post請求缓存数据
  */
 @Entity
 public class CookieResult {
@@ -22,14 +21,12 @@ public class CookieResult {
     @Generated(hash = 43459054)
     public CookieResult() {
     }
-
     public CookieResult(String url, String result, long time) {
         this.url = url;
         this.result = result;
         this.time = time;
     }
-
-    @Generated(hash = 1914207567)
+    @Generated(hash = 430401114)
     public CookieResult(Long id, String url, String result, long time) {
         this.id = id;
         this.url = url;
