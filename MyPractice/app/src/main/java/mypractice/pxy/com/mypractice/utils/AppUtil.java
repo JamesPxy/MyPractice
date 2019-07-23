@@ -45,6 +45,7 @@ public class AppUtil {
 
     /**
      * 读取baseurl
+     *
      * @param url
      * @return
      */
@@ -65,26 +66,27 @@ public class AppUtil {
 
     /**
      * 写入文件
+     *
      * @param file
      * @param info
      * @throws IOException
      */
-    public  static  void writeCache(ResponseBody responseBody, File file, DownInfo info) throws IOException{
+    public static void writeCache(ResponseBody responseBody, File file, DownInfo info) throws IOException {
         if (!file.getParentFile().exists())
             file.getParentFile().mkdirs();
         long allLength;
-        if (info.getCountLength()==0){
-            allLength=responseBody.contentLength();
-        }else{
-            allLength=info.getCountLength();
+        if (info.getCountLength() == 0) {
+            allLength = responseBody.contentLength();
+        } else {
+            allLength = info.getCountLength();
         }
         FileChannel channelOut = null;
         RandomAccessFile randomAccessFile = null;
         randomAccessFile = new RandomAccessFile(file, "rwd");
         channelOut = randomAccessFile.getChannel();
         MappedByteBuffer mappedBuffer = channelOut.map(FileChannel.MapMode.READ_WRITE,
-                info.getReadLength(),allLength-info.getReadLength());
-        byte[] buffer = new byte[1024*8];
+                info.getReadLength(), allLength - info.getReadLength());
+        byte[] buffer = new byte[1024 * 8];
         int len;
         int record = 0;
         while ((len = responseBody.byteStream().read(buffer)) != -1) {

@@ -88,16 +88,15 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
             //启动测试greenDaodemo
-            startActivity(new Intent(MainActivity.this,GreenDaoActivity.class));
+            startActivity(new Intent(MainActivity.this, GreenDaoActivity.class));
         } else if (id == R.id.nav_gallery) {
             //测试 data  Binding入口
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
 
         } else if (id == R.id.nav_slideshow) {
             startActivity(new Intent(MainActivity.this, TestNetActivity.class));
-
         } else if (id == R.id.nav_manage) {
-            Toast.makeText(MainActivity.this,"just test",Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "just test", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
