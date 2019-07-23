@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import mypractice.pxy.com.mypractice.internet.TestNetActivity;
 import mypractice.pxy.com.mypractice.databinding.LoginActivity;
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(MainActivity.this, TestNetActivity.class));
 
         } else if (id == R.id.nav_manage) {
-
+            Toast.makeText(MainActivity.this,"just test",Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
