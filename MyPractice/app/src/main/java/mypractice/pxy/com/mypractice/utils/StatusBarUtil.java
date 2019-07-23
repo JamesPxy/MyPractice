@@ -21,6 +21,7 @@ import mypractice.pxy.com.mypractice.R;
  * <p>
  * Email: chjie.jaeger@gmail.com
  * GitHub: https://github.com/laobie
+ * 
  * blog:https://jaeger.itscoder.com/android/2016/03/27/statusbar-util.html
  */
 public class StatusBarUtil {
